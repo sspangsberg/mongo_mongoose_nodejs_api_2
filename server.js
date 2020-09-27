@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //setup database connection to mongoDB atlas
-const uri = "mongodb+srv://mongo_user:bnqYJ7aQUMhR44TT@cluster0.usxmc.mongodb.net/shop?retryWrites=true&w=majority";
+const uri = "mongodb+srv://db_user:1234easv@cluster0.usxmc.mongodb.net/shop?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 mongoose.connection.once("open", function () {
@@ -35,15 +35,14 @@ var create = function (req, res) {
 
 var retrieve = function (req, res) {
   //advanced query by name
-  //const name = req.query.name;
-  //var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};   
-  //product.find(condition)
-  product.find()
+  const name = req.query.name;
+  var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};   
+  product.find(condition)
     .then(data => { res.send(data); })
     .catch(err => { res.status(500).send({ message: err.message }); });
 }
 
-/*
+
 var retrieveById = function (req, res) {
   product.findById(req.params.id)
     .then(data => { res.send(data); })
@@ -87,16 +86,16 @@ var remove = function (req, res) {
     .catch(err => {
       res.status(500).send({ message: "Could not delete Tutorial with id=" + id }); });
 }
-*/
+
 //-------------------------------------------------
 // CRUD routes
 //-------------------------------------------------
 app.post("/products", create);
 app.get("/products", retrieve);
-//app.get("/products/instock", retrieveInStock);
-//app.get("/products/:id", retrieveById);
-//app.put("/products/:id", update);
-//app.delete("/products/:id", remove);
+app.get("/products/instock", retrieveInStock);
+app.get("/products/:id", retrieveById);
+app.put("/products/:id", update);
+app.delete("/products/:id", remove);
 
 
 
