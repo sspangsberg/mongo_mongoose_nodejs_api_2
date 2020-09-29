@@ -3,12 +3,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const app = express();
+const authRoutes = require('./routes/auth');
 
+// middleware defitions
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// authentication routes to secure the API endpoints
+app.use("/user", authRoutes);
+
 
 //setup database connection to mongoDB atlas
 const uri = "mongodb+srv://db_user:1234easv@cluster0.usxmc.mongodb.net/shop?retryWrites=true&w=majority";
@@ -18,13 +24,15 @@ mongoose.connection.once("open", function () {
   console.log("MongoDB database connection established successfully");
 });
 
+
+
 //start up server
 var port = 4000;
 app.listen(port, function () {
   console.log("Server is running on Port: " + port);
 });
 
-var product = require('./model');
+var product = require('./models/model');
 
 var create = function (req, res) {
   data = req.body;
@@ -87,6 +95,12 @@ var remove = function (req, res) {
       res.status(500).send({ message: "Could not delete Tutorial with id=" + id }); });
 }
 
+
+// Auth routes
+
+
+
+
 //-------------------------------------------------
 // CRUD routes
 //-------------------------------------------------
@@ -96,8 +110,3 @@ app.get("/products/instock", retrieveInStock);
 app.get("/products/:id", retrieveById);
 app.put("/products/:id", update);
 app.delete("/products/:id", remove);
-
-
-
-
-
