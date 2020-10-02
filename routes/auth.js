@@ -1,6 +1,7 @@
+const bcrypt = require('bcrypt');
 const router = require('express').Router();
 const User = require('../models/user');
-const  { registerValidation } = require('../validation');
+const  { registerValidation, loginValidation } = require('../validation');
 
 router.post("/register", async (req, res) => {
     
@@ -18,20 +19,57 @@ router.post("/register", async (req, res) => {
         return res.status(400).json({ error: "Email already exists" });
     }
 
-    //create user object and save it in Mongo (via try-catch)
+    //hash password
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(req.body.password, salt);
+
+    //create user o bject and save it in Mongo (via try-catch)
     const user = new User( {
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password
     });
 
     try {
         const savedUser = await user.save(); //save user
-        res.json( { error: null, data: savedUser } );
+        res.json( { error: null, data: savedUser._id } );
     } catch (error) {
         res.status(400).json( { error });
     }
     
 });    
+
+router.post("/login", async (req, res) => {
+    
+    const { error } = loginValidation(req.body);
+
+    if (error) {
+        return res.status(400).json({error : error.details[0].message });
+    }
+    
+    const user = await User.findOne({ email: req.body.email });
+
+    //throw error when email is wrong
+    if (!user) {
+        return res.status(400).json({ error: "Email is wrong" });
+    }
+
+    //check for password correctness
+    const validPassword = await bcrypt.compare(req.body.password, user.password);
+
+    if (!validPassword) {
+        return res.status(400).json({ error: "Password is wrong" })
+    }
+
+    res.json({
+        error: null,
+        data: {
+            message: "Login Succesful"
+        }
+    });
+    
+})
+
+
 
 module.exports = router;
