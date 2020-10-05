@@ -36,9 +36,10 @@ app.use("/products", productRoutes);
 app.use("/dashboard" , verifyToken, dashboardRoutes);
 
 //start up server
-var port = 4000;
-app.listen(port, function () {
-  console.log("Server is running on Port: " + port);
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, function () {
+  console.log("Server is running on Port: " + PORT);
 });
 
 module.exports = app;
