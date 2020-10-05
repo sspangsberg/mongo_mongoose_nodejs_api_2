@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = require('express').Router();
 const User = require('../models/user');
-const  { registerValidation, loginValidation } = require('../validation');
+const { registerValidation, loginValidation } = require('../validation');
 
 router.post("/register", async (req, res) => {
-    
+
     //validate user inputs (name, email, password)
     const { error } = registerValidation(req.body);
-    
+
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
@@ -24,7 +25,7 @@ router.post("/register", async (req, res) => {
     const password = await bcrypt.hash(req.body.password, salt);
 
     //create user o bject and save it in Mongo (via try-catch)
-    const user = new User( {
+    const user = new User({
         name: req.body.name,
         email: req.body.email,
         password
@@ -32,21 +33,21 @@ router.post("/register", async (req, res) => {
 
     try {
         const savedUser = await user.save(); //save user
-        res.json( { error: null, data: savedUser._id } );
+        res.json({ error: null, data: savedUser._id });
     } catch (error) {
-        res.status(400).json( { error });
+        res.status(400).json({ error });
     }
-    
-});    
+
+});
 
 router.post("/login", async (req, res) => {
-    
+
     const { error } = loginValidation(req.body);
 
     if (error) {
-        return res.status(400).json({error : error.details[0].message });
+        return res.status(400).json({ error: error.details[0].message });
     }
-    
+
     const user = await User.findOne({ email: req.body.email });
 
     //throw error when email is wrong
@@ -61,15 +62,20 @@ router.post("/login", async (req, res) => {
         return res.status(400).json({ error: "Password is wrong" })
     }
 
-    res.json({
+    //create authentication token with username and id
+    const token = jwt.sign(
+        //payload data
+        {
+            name: user.name,
+            id: user._id
+        },
+        process.env.TOKEN_SECRET
+    );
+
+    res.header("auth-token", token).json({
         error: null,
-        data: {
-            message: "Login Succesful"
-        }
+        data: { token }
     });
-    
 })
-
-
 
 module.exports = router;
