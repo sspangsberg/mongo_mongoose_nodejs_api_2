@@ -31,9 +31,9 @@ mongoose.connect(process.env.DB_CONNECT,
 });
 
 // authentication routes to secure the API endpoints
-app.use("/api/user", authRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/dashboard" , verifyToken, dashboardRoutes);
+app.use("/user", authRoutes);
+app.use("/products", productRoutes);
+app.use("/dashboard" , verifyToken, dashboardRoutes);
 
 //start up server
 const PORT = process.env.PORT || 4000;
