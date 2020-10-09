@@ -32,7 +32,7 @@ mongoose.connect(process.env.DB_CONNECT,
 
 // authentication routes to secure the API endpoints
 app.use("/user", authRoutes);
-app.use("/products", productRoutes);
+app.use("/api/products", productRoutes);
 app.use("/dashboard" , verifyToken, dashboardRoutes);
 
 //start up server
