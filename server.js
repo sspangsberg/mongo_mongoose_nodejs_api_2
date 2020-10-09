@@ -30,13 +30,18 @@ mongoose.connect(process.env.DB_CONNECT,
   console.log("MongoDB database connection established successfully");
 });
 
+//welcome route
+app.get("/api/welcome", (req, res) => { 
+  res.status(200).json({ message: "Welcome to this awesome API"});    
+});
+
 // authentication routes to secure the API endpoints
-app.use("/user", authRoutes);
-app.use("/products", productRoutes);
-app.use("/dashboard" , verifyToken, dashboardRoutes);
+app.use("/api/user", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/dashboard" , verifyToken, dashboardRoutes);
 
 //start up server
-var port = 4000;
+const port = process.env.PORT || 4000;
 app.listen(port, function () {
   console.log("Server is running on Port: " + port);
 });
