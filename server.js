@@ -30,11 +30,6 @@ mongoose.connect(process.env.DB_CONNECT,
   console.log("MongoDB database connection established successfully");
 });
 
-//welcome route
-app.get("/api/welcome", (req, res) => { 
-  res.status(200).json({ message: "Welcome to this awesome API"});    
-});
-
 // authentication routes to secure the API endpoints
 app.use("/api/user", authRoutes);
 app.use("/api/products", productRoutes);
