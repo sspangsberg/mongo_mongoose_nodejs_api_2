@@ -11,7 +11,6 @@ const registerValidation = (data) => {
     return schema.validate(data);
 }
 
-
 const loginValidation = (data) => {
     const schema = Joi.object(
         {
@@ -20,8 +19,6 @@ const loginValidation = (data) => {
         });
     return schema.validate(data);
 }
-
-
 
 // middleware to verify token
 const verifyToken = (req, res, next) => {

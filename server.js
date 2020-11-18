@@ -6,9 +6,9 @@ const dotenv = require("dotenv");
 const app = express();
 
 //import routes and 
-const authRoutes = require("./routes/auth");
+//const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
-const dashboardRoutes = require("./routes/dashboard");
+//const dashboardRoutes = require("./routes/dashboard");
 const { verifyToken } = require("./validation");
 
 dotenv.config();
@@ -31,9 +31,9 @@ mongoose.connect(process.env.DB_CONNECT,
 });
 
 // authentication routes to secure the API endpoints
-app.use("/api/user", authRoutes);
+//app.use("/api/user", authRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/dashboard" , verifyToken, dashboardRoutes);
+//app.use("/api/dashboard" , verifyToken, dashboardRoutes);
 
 //start up server
 const PORT = process.env.PORT || 4000;

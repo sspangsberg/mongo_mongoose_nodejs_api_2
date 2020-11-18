@@ -63,13 +63,15 @@ router.post("/login", async (req, res) => {
     }
 
     //create authentication token with username and id
-    const token = jwt.sign(
+    const token = jwt.sign
+    (
         //payload data
         {
             name: user.name,
             id: user._id
         },
-        process.env.TOKEN_SECRET
+        process.env.TOKEN_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN }, 
     );
 
     res.header("auth-token", token).json({

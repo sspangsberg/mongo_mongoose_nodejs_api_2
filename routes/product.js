@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const product = require("../models/product");
-const { verifyToken } = require("../validation");
+//const { verifyToken } = require("../validation");
 
 
 // Create new product
-router.post("/", verifyToken, (req, res) => {
+//router.post("/", verifyToken, (req, res) => {
+router.post("/", (req, res) => {
     data = req.body;
     product.insertMany(data)
         .then(data => { res.send(data); })
@@ -40,7 +41,8 @@ router.get("/:id", (req, res) => {
 
 
 // Update Product
-router.put("/:id", verifyToken, (req, res) => {
+//router.put("/:id", verifyToken, (req, res) => {
+router.put("/:id", (req, res) => {
     const id = req.params.id;
 
     product.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
@@ -57,8 +59,8 @@ router.put("/:id", verifyToken, (req, res) => {
 });
 
 // Delete Product
-router.delete("/:id", verifyToken, (req, res) => {
-
+//router.delete("/:id", verifyToken, (req, res) => {
+router.delete("/:id", (req, res) => {
     const id = req.params.id;
 
     product.findByIdAndRemove(id)
