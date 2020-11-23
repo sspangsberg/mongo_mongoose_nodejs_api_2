@@ -1,14 +1,14 @@
 {
-  "name": "mongotest",
+  "name": "men_restful_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mongo/Mongoose-ExpressJS-NodeJS (MEN) RESTful API",
   "main": "server.js",
   "scripts": {
     "start:dev": "cross-env NODE_ENV=development nodemon server.js",
     "test": "cross-env NODE_ENV=test mocha --timeout 10000"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["mongodb","mongoose", "expressjs", "nodejs", "restful", "api"],
+  "author": "smsj",
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
