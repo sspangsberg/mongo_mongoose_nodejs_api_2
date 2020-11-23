@@ -4,7 +4,6 @@
   "description": "Mongo/Mongoose-ExpressJS-NodeJS (MEN) RESTful API",
   "main": "server.js",
   "scripts": {
-    "start:prod": "NODE_ENV=production",
     "start:dev": "cross-env NODE_ENV=development nodemon server.js",
     "test": "cross-env NODE_ENV=test mocha --timeout 10000"
   },
