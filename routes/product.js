@@ -42,7 +42,7 @@ router.put("/:id", verifyToken, (req, res) => {
 //router.put("/:id", (req, res) => {
     const id = req.params.id;
 
-    product.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    product.findByIdAndUpdate(id, req.body)
         .then(data => {
             if (!data)
                 res.status(404).send({ message: `Cannot update product with id=${id}. Maybe product was not found!` });

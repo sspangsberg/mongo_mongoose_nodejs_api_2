@@ -11,7 +11,7 @@
   "author": "smsj",
   "license": "ISC",
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
+    "joi": "^17.1.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cross-env": "^7.0.2",
