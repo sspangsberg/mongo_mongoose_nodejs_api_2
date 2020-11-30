@@ -11,6 +11,7 @@ require('dotenv-flow').config();
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 
+
 // middleware defitions
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -26,14 +27,15 @@ mongoose.connect
     useUnifiedTopology: true, 
     useNewUrlParser: true 
   }
-);
-mongoose.connection.on('error', console.error.bind(console, 'Connection error:'));
-mongoose.connection.once('open', console.error.bind(console, 'Connected succesfully to MongoDB:' + process.env.DB_HOST));
+).catch(error => console.log("Error connecting to MongoDB: " + error));
+
+//display message when we have connection
+mongoose.connection.once('open', () => console.log('Connected succesfully to MongoDB'));
 
 //routes definition
 app.get("/api/welcome", (req,res) => {
   res.status(200).send({message: "Welcome to the MEN-RESTful-API"});
-});
+}); 
 
 // authentication routes to secure the API endpoints
 app.use("/api/user", authRoutes); //authentication routes (register, login)

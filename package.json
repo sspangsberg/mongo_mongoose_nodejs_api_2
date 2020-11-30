@@ -7,20 +7,26 @@
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
     "test": "cross-env NODE_ENV=test mocha --timeout 10000"
   },
-  "keywords": ["mongodb","mongoose", "expressjs", "nodejs", "restful", "api"],
+  "keywords": [
+    "mongodb",
+    "mongoose",
+    "expressjs",
+    "nodejs",
+    "restful",
+    "api"
+  ],
   "author": "smsj",
   "license": "ISC",
   "dependencies": {
-    "joi": "^17.1.1",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cross-env": "^7.0.2",
-    "dotenv": "^8.2.0",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
+    "joi": "^17.1.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.10.7"
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.10.15"
   },
   "devDependencies": {
     "chai": "^4.2.0",
