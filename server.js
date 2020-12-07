@@ -7,6 +7,7 @@ const app = express();
 //load configuration from .env file
 require('dotenv-flow').config();
 
+
 //import routes and validation
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
@@ -22,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //connect to the MongoDB using Mongoose ODM
 mongoose.connect
 (
-  process.env.DB_HOST, 
+  process.env.DBHOST, 
   { 
     useUnifiedTopology: true, 
     useNewUrlParser: true 

@@ -17,7 +17,6 @@ router.get("/", (req, res) => {
     const name = req.query.name;
  
     var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-    
     product.find(condition)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
