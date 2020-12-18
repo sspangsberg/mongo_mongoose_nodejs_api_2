@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //connect to the MongoDB using Mongoose ODM
 mongoose.connect
 (
-  process.env.DB_HOST, 
+  process.env.DBHOST, 
   { 
     useUnifiedTopology: true, 
     useNewUrlParser: true 

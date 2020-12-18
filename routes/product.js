@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const product = require("../models/product");
-const { verifyToken } = require("../validation");
+//const { verifyToken } = require("../validation");
 
 // Create new product
-router.post("/", verifyToken, (req, res) => {
-//router.post("/", (req, res) => {
+//router.post("/", verifyToken, (req, res) => {
+router.post("/", (req, res) => {
     data = req.body;
     product.insertMany(data)
         .then(data => { res.send(data); })
@@ -14,11 +14,12 @@ router.post("/", verifyToken, (req, res) => {
 // Retrieve Products based on search condition
 router.get("/", (req, res) => {
     //advanced query by name
-    const name = req.query.name;
+    //const name = req.query.name;
  
-    var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
+    //var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
     
-    product.find(condition)
+    product.find()
+    //product.find(condition)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
@@ -38,14 +39,14 @@ router.get("/:id", (req, res) => {
 });
 
 // Update Product
-router.put("/:id", verifyToken, (req, res) => {
-//router.put("/:id", (req, res) => {
+//router.put("/:id", verifyToken, (req, res) => {
+router.put("/:id", (req, res) => {
     const id = req.params.id;
 
     product.findByIdAndUpdate(id, req.body)
         .then(data => {
             if (!data)
-                res.status(404).send({ message: `Cannot update product with id=${id}. Maybe product was not found!` });
+                res.status(404).send({ message: "Cannot update product with id=" + id + ". Maybe product was not found!" });
             else
                 res.send({ message: "Product was updated successfully." });
         })
@@ -56,8 +57,8 @@ router.put("/:id", verifyToken, (req, res) => {
 });
 
 // Delete Product
-router.delete("/:id", verifyToken, (req, res) => {
-//router.delete("/:id", (req, res) => {
+//router.delete("/:id", verifyToken, (req, res) => {
+router.delete("/:id", (req, res) => {
     const id = req.params.id;
 
     product.findByIdAndRemove(id)
