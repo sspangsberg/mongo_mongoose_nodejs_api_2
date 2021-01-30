@@ -2,7 +2,8 @@ const router = require("express").Router();
 const product = require("../models/product");
 const { verifyToken } = require("../validation");
 
-router.post("/", verifyToken, (req, res) => {
+// Create new product
+router.post("/", (req, res) => {
 //router.post("/", (req, res) => {
     data = req.body;
     product.insertMany(data)
@@ -13,12 +14,10 @@ router.post("/", verifyToken, (req, res) => {
 
 router.get("/", (req, res) => {
     //advanced query by name
-    //const name = req.query.name;
-
-    //var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-
-    product.find()
-        //product.find(condition)
+    const name = req.query.name;
+ 
+    var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
+    product.find(condition)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });

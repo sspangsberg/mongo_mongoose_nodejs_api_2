@@ -37,11 +37,13 @@ mongoose.connect
 ).catch(error => console.log("Error connecting to MongoDB: " + error));
 
 //display message when we have connection
-mongoose.connection.once('open', () => console.log('Connected succesfully to MongoDB'));
+if (process.env.NODE_ENV == 'development') {
+  mongoose.connection.once('open', () => console.log('Connected succesfully to MongoDB'));
+}
 
 //routes definition
 app.get("/api/welcome", (req,res) => {
-  res.status(200).send({message: "Welcome to the MEN-RESTful-API"});
+  res.status(200).send({message: "Welcome to the MEN-RESTful-API Updated"});
 }); 
 
 // authentication routes to secure the API endpoints

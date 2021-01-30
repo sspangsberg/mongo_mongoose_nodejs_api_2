@@ -4,8 +4,9 @@
   "description": "Mongo/Mongoose-ExpressJS-NodeJS (MEN) RESTful API",
   "main": "server.js",
   "scripts": {
-    "start-dev": "cross-env NODE_ENV=development nodemon server.js --ext '*'",
-    "test": "cross-env NODE_ENV=test mocha --timeout 10000"
+    "start-cicd": "cross-env NODE_ENV=cicd nodemon server.js",
+    "start-dev": "cross-env NODE_ENV=development nodemon server.js",
+    "test": "cross-env NODE_ENV=test nodemon --exec mocha"
   },
   "keywords": [
     "mongodb",
