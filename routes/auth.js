@@ -42,15 +42,17 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
 
+    //validate user login info
     const { error } = loginValidation(req.body);
 
     if (error) {
         return res.status(400).json({ error: error.details[0].message });
     }
 
+    //if login info is valid find the user
     const user = await User.findOne({ email: req.body.email });
 
-    //throw error when email is wrong
+    //throw error if email is wrong - user does not exist in DB
     if (!user) {
         return res.status(400).json({ error: "Email is wrong" });
     }
@@ -58,6 +60,7 @@ router.post("/login", async (req, res) => {
     //check for password correctness
     const validPassword = await bcrypt.compare(req.body.password, user.password);
 
+    //throw error if password is wrong
     if (!validPassword) {
         return res.status(400).json({ error: "Password is wrong" })
     }

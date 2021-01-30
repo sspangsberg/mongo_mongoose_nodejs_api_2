@@ -2,10 +2,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 const app = express();
 
 //load configuration from .env file
 require('dotenv-flow').config();
+
+//setup Swagger
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 //import routes and validation
 const authRoutes = require("./routes/auth");

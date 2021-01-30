@@ -1,25 +1,24 @@
 const router = require("express").Router();
 const product = require("../models/product");
-//const { verifyToken } = require("../validation");
+const { verifyToken } = require("../validation");
 
-// Create new product
-//router.post("/", verifyToken, (req, res) => {
-router.post("/", (req, res) => {
+router.post("/", verifyToken, (req, res) => {
+//router.post("/", (req, res) => {
     data = req.body;
     product.insertMany(data)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
 
-// Retrieve Products based on search condition
+
 router.get("/", (req, res) => {
     //advanced query by name
     //const name = req.query.name;
- 
+
     //var condition = name ? { name: { $regex: new RegExp(name), $options: "i" } } : {};
-    
+
     product.find()
-    //product.find(condition)
+        //product.find(condition)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
@@ -31,7 +30,7 @@ router.get("/instock", (req, res) => {
         .catch(err => { res.status(500).send({ message: err }); })
 });
 
-// Retrieve Products based on id
+
 router.get("/:id", (req, res) => {
     product.findById(req.params.id)
         .then(data => { res.send(data); })
@@ -76,3 +75,4 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
+
