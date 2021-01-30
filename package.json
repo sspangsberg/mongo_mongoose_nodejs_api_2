@@ -6,7 +6,7 @@
   "scripts": {
     "start-cicd": "cross-env NODE_ENV=cicd nodemon server.js",
     "start-dev": "cross-env NODE_ENV=development nodemon server.js",
-    "test": "cross-env NODE_ENV=test mocha --timeout 10000"
+    "test": "cross-env NODE_ENV=test nodemon --exec mocha"
   },
   "keywords": [
     "mongodb",

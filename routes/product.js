@@ -3,7 +3,7 @@ const product = require("../models/product");
 const { verifyToken } = require("../validation");
 
 // Create new product
-router.post("/", verifyToken, (req, res) => {
+router.post("/", (req, res) => {
 //router.post("/", (req, res) => {
     data = req.body;
     product.insertMany(data)
