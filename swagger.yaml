@@ -6,8 +6,8 @@ info:
 servers:
   - url: http://localhost:4000/api/
     description: Localhost development server
-  - url: http://:4000/api/
-    description: Localhost development server
+  - url: https://fathomless-reaches-19485.herokuapp.com/api/
+    description: Deployment server (Heroku)
 
 components:
   securitySchemes:
