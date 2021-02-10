@@ -2,11 +2,12 @@ const router = require("express").Router();
 const product = require("../models/product");
 const { verifyToken } = require("../validation");
 
+
 router.post("/", verifyToken, (req, res) => {
 //router.post("/", (req, res) => {
     data = req.body;
     product.insertMany(data)
-        .then(data => { res.send(data); })
+        .then(data => { res.status(201).send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
 
@@ -31,11 +32,18 @@ router.get("/instock", (req, res) => {
 });
 
 
+
+
+
+
+
 router.get("/:id", (req, res) => {
     product.findById(req.params.id)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
+
+
 
 // Update Product
 //router.put("/:id", verifyToken, (req, res) => {
