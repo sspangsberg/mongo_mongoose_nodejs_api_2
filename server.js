@@ -10,13 +10,33 @@ const app = express();
 require('dotenv-flow').config();
 
 //setup Swagger
-const swaggerDocument = YAML.load('./swagger.yaml');
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+//const swaggerDocument = YAML.load('./swagger.yaml');
+//app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+var { graphqlHTTP } = require('express-graphql');
+var { buildSchema } = require('graphql');
+ 
+var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
+ 
+var root = { hello: () => 'Hello world!' };
+ 
+//var app = express();
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
+
 
 
 //import routes and validation
-const authRoutes = require("./routes/auth");
-const productRoutes = require("./routes/product");
+//const authRoutes = require("./routes/auth");
+//const productRoutes = require("./routes/product");
 
 
 // middleware defitions
@@ -45,8 +65,8 @@ app.get("/api/welcome", (req,res) => {
 }); 
 
 // authentication routes to secure the API endpoints
-app.use("/api/user", authRoutes); //authentication routes (register, login)
-app.use("/api/products", productRoutes); //CRUD routes
+//app.use("/api/user", authRoutes); //authentication routes (register, login)
+//app.use("/api/products", productRoutes); //CRUD routes
 
 //start up server
 const PORT = process.env.PORT || 4000;
