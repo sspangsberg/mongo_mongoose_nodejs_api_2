@@ -7,7 +7,7 @@ const { verifyToken } = require("../validation");
 router.post("/", (req, res) => {
     const data = req.body;
     product.insertMany(data)
-        .then(data => { res.send(data); })
+        .then(data => { res.status(201).send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
 
@@ -30,11 +30,18 @@ router.get("/instock", (req, res) => {
 });
 
 
+
+
+
+
+
 router.get("/:id", (req, res) => {
     product.findById(req.params.id)
         .then(data => { res.send(data); })
         .catch(err => { res.status(500).send({ message: err.message }); });
 });
+
+
 
 // Update Product
 //router.put("/:id", verifyToken, (req, res) => {

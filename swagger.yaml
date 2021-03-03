@@ -41,7 +41,7 @@ components:
         password:
           type: string
         date:
-          type: Date
+          type: string
 
 paths:
 
