@@ -7,25 +7,32 @@ let Product = require('../models/product');
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../server');
+let server = require('../server'); //causes test to hang...
 let should = chai.should();
 
 chai.use(chaiHttp);
 
-// Empty database before tests
-before(function() { //Before each test we empty the database
-  
-  Product.deleteMany({}, function(err) {
-    //done();
-  });
-});
-
 /*
  * Test the /GET route
  */
-describe('/Product CRUD operations', function() {
+describe('/Product CRUD operations', function () {
+
   
-  it('should GET all the products', function(done) {
+  // Empty database before tests
+  before(function (done) { //Before each test we empty the database  
+    Product.deleteMany({}, function (err) {
+      done();
+    }
+  )});
+
+  //Clean up
+  after(function (done) {
+    Product.deleteMany({}, function (err) {
+      done();
+    }
+  )});
+
+  it('should GET all the products', function (done) {
     chai.request(server)
       .get('/api/products')
       .end((err, res) => {
@@ -36,8 +43,7 @@ describe('/Product CRUD operations', function() {
       });
   });
 
-
-  it('should POST an invalid product', function(done) {
+  it('should POST an invalid product', function (done) {
     let product = {
       name: "Invalid Product Test",
       description: "Description of the Invalid Product Test"
@@ -52,8 +58,7 @@ describe('/Product CRUD operations', function() {
       })
   });
 
-
-  it('should POST a valid product', function(done) {
+  it('should POST a valid product', function (done) {
     let product = {
       name: "Product Test",
       description: "Description of the Product Test",
@@ -70,9 +75,7 @@ describe('/Product CRUD operations', function() {
       })
   });
 
-
-  it('it should verify that we have 1 product in DB collection ', function(done) {
-
+  it('should verify that we have 1 product in DB collection ', function (done) {
     chai.request(server)
       .get('/api/products')
       .end((err, res) => {
@@ -82,13 +85,6 @@ describe('/Product CRUD operations', function() {
         done();
       });
   });
-
+  
 });
 
-
-//Clean up af tests
-after((done) => {
-  Product.deleteMany({}, function(err) {
-    done();
-  });
-});
