@@ -1,13 +1,7 @@
-//During the test the env variable is set to test
-process.env.NODE_ENV = 'test';
-
-let mongoose = require("mongoose");
-let Product = require('../models/product');
-
 //Require the dev-dependencies
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../server'); //causes test to hang...
+let server = require('../server');
 let should = chai.should();
 
 chai.use(chaiHttp);
@@ -16,21 +10,6 @@ chai.use(chaiHttp);
  * Test the /GET route
  */
 describe('/Product CRUD operations', function () {
-
-  
-  // Empty database before tests
-  before(function (done) { //Before each test we empty the database  
-    Product.deleteMany({}, function (err) {
-      done();
-    }
-  )});
-
-  //Clean up
-  after(function (done) {
-    Product.deleteMany({}, function (err) {
-      done();
-    }
-  )});
 
   it('should GET all the products', function (done) {
     chai.request(server)
@@ -84,7 +63,6 @@ describe('/Product CRUD operations', function () {
         res.body.length.should.be.eql(1);
         done();
       });
-  });
-  
+  });  
 });
 

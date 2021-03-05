@@ -6,8 +6,8 @@
     "slow": 75,
     "timeout": 20000,
     "recursive": true,
-    //"file": ["test/utils/helpers.js", "test/utils/authorizer.js"],
+    "file": ["test/setup.test.js", "test/product.test.js", "test/user.test.js"],
     "ui": "bdd",
     "watch-files": ["lib/**/*.js", "test/**/*.js"],
-    "watch-ignore": ["lib/vendor"]
+    "watch-ignore": ["vendor"]
 }
